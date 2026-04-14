@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio | Faris Nabil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <nav class="site-nav">
@@ -29,7 +31,14 @@
 
     <header class="hero container">
         <div class="hero-content">
-            <span class="badge">Available for Projects</span>
+            <div class="badges-wrapper">
+                <span class="badge">Available for Projects</span>
+                <span class="badge clock-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top: -2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span id="real-time-clock">00:00:00</span> WIB
+                </span>
+            </div>
+            
             <h1 class="headline">Selamat datang di web portofolio Faris</h1>
             <p>Membangun solusi digital yang fungsional dengan estetika yang bersih. Berbasis di Cileungsi, Indonesia.</p>
             <div class="hero-btns">
@@ -58,7 +67,7 @@
                     <ul>
                         <li><strong>Umur:</strong> 17 Tahun</li>
                         <li><strong>Lokasi:</strong> Cileungsi, Jawa Barat</li>
-                        <li><strong>Minat:</strong> Coding, Film, Sepak Bola, Sports</li>
+                        <li><strong>Minat:</strong> Fotografi, Film, Sepak Bola</li>
                     </ul>
                 </div>
                 
@@ -66,8 +75,9 @@
                     <h3>Hobi</h3>
                     <div class="hobby-tags">
                         <span class="hobby">Coding</span>
+                        <span class="hobby">Fotografi</span>
                         <span class="hobby">Sepak Bola</span>
-                        <span class="hobby">Nonton Film</span>
+                        <span class="hobby">Desain UI</span>
                         <span class="hobby">Gaming</span>
                     </div>
                 </div>
@@ -182,6 +192,12 @@
             <a href="https://wa.me/6285772127073?text=Halo%20Faris%2C%20saya%20ingin%20berkolaborasi" class="btn-primary" target="_blank" rel="noopener noreferrer">Hubungi via WhatsApp</a>
         </div>
     </section>
+
+    <button id="back-to-top" aria-label="Kembali ke atas">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </button>
 
     <footer>
         <div class="container">

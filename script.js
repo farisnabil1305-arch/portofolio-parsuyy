@@ -19,15 +19,13 @@ function setupRevealOnScroll() {
                 const sec = entry.target;
                 sec.classList.add('in-view');
 
-                // Stagger children animations inside the section
-                const items = sec.querySelectorAll('h2, .section-header, .badge, .headline, .hero p, .hero-btns a, .timeline-item, .skill-category, .tags span, .about-text p, .personal-info li, .cert-card, .contact-card');
+                const items = sec.querySelectorAll('h2, .section-header, .badge, .headline, .hero p, .hero-btns a, .timeline-item, .skill-category, .tags span, .about-text p, .personal-info li, .contact-card');
                 items.forEach((el, i) => {
                     el.classList.add('stagger');
                     el.style.transitionDelay = (i * 60) + 'ms';
                     setTimeout(() => el.classList.add('in'), i * 60 + 40);
                 });
 
-                // Also reveal timeline items specifically
                 const timelineItems = sec.querySelectorAll('.timeline-item');
                 timelineItems.forEach((it, idx) => {
                     it.style.transitionDelay = (idx * 80) + 'ms';
@@ -45,9 +43,9 @@ function setupRevealOnScroll() {
     });
 }
 
-// DOM ready: headline split, hero entrance, nav toggle, ripple, parallax, reveal
+// DOM ready
 document.addEventListener('DOMContentLoaded', () => {
-    // NAV TOGGLE (mobile)
+    // NAV TOGGLE
     const nav = document.querySelector('nav.site-nav');
     const navToggle = document.querySelector('.nav-toggle');
     if (nav && navToggle) {
@@ -65,44 +63,62 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Headline per-character split
+    // Perbaikan Teks Kepotong "por tofolio"
     const headline = document.querySelector('.headline');
     if (headline) {
         const text = headline.textContent.trim();
         headline.textContent = '';
-        text.split('').forEach((ch, i) => {
-            const span = document.createElement('span');
-            span.className = 'char';
-            span.style.setProperty('--i', i);
-            span.textContent = ch === ' ' ? '\u00A0' : ch;
-            headline.appendChild(span);
+        const words = text.split(' ');
+        let charIndex = 0;
+        
+        words.forEach((word, wordIndex) => {
+            const wordSpan = document.createElement('span');
+            wordSpan.className = 'word';
+            
+            word.split('').forEach(ch => {
+                const span = document.createElement('span');
+                span.className = 'char';
+                span.style.setProperty('--i', charIndex++);
+                span.textContent = ch;
+                wordSpan.appendChild(span);
+            });
+            
+            headline.appendChild(wordSpan);
+            
+            if (wordIndex < words.length - 1) {
+                headline.appendChild(document.createTextNode(' '));
+            }
         });
+        
         requestAnimationFrame(() => headline.classList.add('reveal'));
     }
 
-    // Hero entrance sequence (staggered)
+    // Hero entrance sequence 
     const hero = document.querySelector('.hero');
     if (hero) {
-        const badge = hero.querySelector('.badge');
+        const badges = hero.querySelectorAll('.badge'); 
         const h1 = hero.querySelector('.headline');
         const p = hero.querySelector('.hero p');
         const buttons = Array.from(hero.querySelectorAll('.hero-btns a'));
         const imageWrap = document.querySelector('.hero-image-wrapper');
 
-        if (badge) badge.classList.add('fade-up');
+        badges.forEach(badge => badge.classList.add('fade-up'));
         if (h1) h1.classList.add('fade-up');
         if (p) p.classList.add('fade-up');
         buttons.forEach(b => b.classList.add('fade-up'));
 
-        setTimeout(() => badge && badge.classList.add('enter'), 120);
-        setTimeout(() => h1 && h1.classList.add('enter'), 260);
+        badges.forEach((badge, index) => {
+            setTimeout(() => badge.classList.add('enter'), 120 + (index * 100)); 
+        });
+        
+        setTimeout(() => h1 && h1.classList.add('enter'), 320);
         setTimeout(() => p && p.classList.add('enter'), 440);
         buttons.forEach((b, i) => setTimeout(() => b.classList.add('enter'), 540 + i * 110));
         setTimeout(() => imageWrap && imageWrap.classList.add('float'), 700);
     }
 
-    // Ripple effect for buttons
-    document.querySelectorAll('.btn-primary, .btn-secondary, button').forEach(btn => {
+    // Ripple effect
+    document.querySelectorAll('.btn-primary, .btn-secondary, button:not(#theme-toggle):not(.nav-toggle)').forEach(btn => {
         btn.addEventListener('click', function(e) {
             const rect = this.getBoundingClientRect();
             const ripple = document.createElement('span');
@@ -116,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Hero parallax (desktop only)
+    // Hero parallax
     const imageWrap = document.querySelector('.hero-image-wrapper');
     if (hero && imageWrap && window.matchMedia('(hover: hover)').matches) {
         hero.addEventListener('mousemove', (e) => {
@@ -128,12 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
         hero.addEventListener('mouseleave', () => imageWrap.style.transform = '');
     }
 
-    // Initialize reveal observer
     setupRevealOnScroll();
     
-    // =========================================
-    // TAMBAHAN SCRIPT UNTUK DARK/LIGHT MODE
-    // =========================================
+    // DARK/LIGHT MODE
     const themeToggleBtn = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('portfolio-theme');
 
@@ -151,6 +164,45 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.documentElement.setAttribute('data-theme', 'light');
                 localStorage.setItem('portfolio-theme', 'light');
             }
+        });
+    }
+
+    // REAL-TIME CLOCK
+    function updateClock() {
+        const clockElement = document.getElementById('real-time-clock');
+        if (clockElement) {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+        }
+    }
+    
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // =========================================
+    // SCRIPT TOMBOL BACK TO TOP
+    // =========================================
+    const backToTopBtn = document.getElementById('back-to-top');
+    
+    if (backToTopBtn) {
+        // Munculin tombol kalau udah scroll ke bawah (lewat 300px)
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        // Pas diklik, layar balik ke atas dengan efek smooth
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     }
 });
