@@ -146,6 +146,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setupRevealOnScroll();
     
+    // SKILL CARDS - Mouse tracking effect
+    const skillCards = document.querySelectorAll('.skill-category');
+    skillCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', x + 'px');
+            card.style.setProperty('--mouse-y', y + 'px');
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.setProperty('--mouse-x', '50%');
+            card.style.setProperty('--mouse-y', '50%');
+        });
+    });
+    
     // DARK/LIGHT MODE
     const themeToggleBtn = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('portfolio-theme');
@@ -203,6 +220,49 @@ document.addEventListener('DOMContentLoaded', () => {
                 top: 0,
                 behavior: 'smooth'
             });
+        });
+    }
+
+    // SUPPORT MODAL (DANA / GOPAY)
+    const supportModal = document.getElementById('support-modal');
+    if (supportModal) {
+        const supportOverlay = supportModal.querySelector('.support-modal-overlay');
+        const supportClose = supportModal.querySelector('.support-modal-close');
+        const supportTitle = document.getElementById('support-modal-title');
+        const supportNumberInput = document.getElementById('support-number');
+        const copySupportBtn = document.getElementById('copy-support-number');
+
+        document.querySelectorAll('.support-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const method = btn.dataset.method || 'dana';
+                const number = btn.dataset.number || document.getElementById('support-default-number')?.textContent.replace(/\D/g,'') || '';
+                if (supportTitle) supportTitle.textContent = method === 'gopay' ? 'GoPay' : 'DANA';
+                if (supportNumberInput) supportNumberInput.value = number;
+                supportModal.classList.add('open');
+                supportModal.setAttribute('aria-hidden', 'false');
+            });
+        });
+
+        function closeSupportModal() {
+            supportModal.classList.remove('open');
+            supportModal.setAttribute('aria-hidden', 'true');
+        }
+
+        supportOverlay && supportOverlay.addEventListener('click', closeSupportModal);
+        supportClose && supportClose.addEventListener('click', closeSupportModal);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSupportModal(); });
+
+        copySupportBtn && copySupportBtn.addEventListener('click', async () => {
+            const val = supportNumberInput && supportNumberInput.value || '';
+            try {
+                await navigator.clipboard.writeText(val);
+                const orig = copySupportBtn.textContent;
+                copySupportBtn.textContent = 'Disalin!';
+                setTimeout(() => copySupportBtn.textContent = orig, 1800);
+            } catch (err) {
+                copySupportBtn.textContent = 'Gagal';
+                setTimeout(() => copySupportBtn.textContent = 'Salin', 1800);
+            }
         });
     }
 });
