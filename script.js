@@ -231,6 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const supportTitle = document.getElementById('support-modal-title');
         const supportNumberInput = document.getElementById('support-number');
         const copySupportBtn = document.getElementById('copy-support-number');
+        const qrImg = supportModal.querySelector('#support-qr-img');
 
         document.querySelectorAll('.support-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -238,6 +239,81 @@ document.addEventListener('DOMContentLoaded', () => {
                 const number = btn.dataset.number || document.getElementById('support-default-number')?.textContent.replace(/\D/g,'') || '';
                 if (supportTitle) supportTitle.textContent = method === 'gopay' ? 'GoPay' : 'DANA';
                 if (supportNumberInput) supportNumberInput.value = number;
+
+                // Set QR image src based on method. Try several candidate paths (fallbacks)
+                if (qrImg) {
+                    const candidates = [
+                        `assets/qr/${method}.png`,
+                        `assets/qr/${method}.jpg`,
+                        `assets/qr/${method}.jpeg`,
+                        `assets/qr/${method}.gif`,
+                        // older location / files with spaces (observed in repo)
+                        `assets/CV/qr/qr ${method}.jpeg`,
+                        `assets/CV/qr/qr ${method}.jpg`,
+                        `assets/CV/qr/qr ${method}.png`,
+                        `assets/CV/qr/${method}.png`,
+                        `assets/CV/qr/${method}.jpg`,
+                        `assets/CV/qr/${method}.jpeg`
+                    ];
+
+                    let idx = 0;
+                    qrImg.alt = `${method.toUpperCase()} QR Code`;
+                    qrImg.src = candidates[idx];
+                    qrImg.style.opacity = '0';
+
+                    const tryNext = () => {
+                        idx++;
+                        if (idx < candidates.length) {
+                            qrImg.src = candidates[idx];
+                        } else {
+                            // all failed -> show placeholder styling and hidden image
+                            qrImg.src = '';
+                            qrImg.style.opacity = '0';
+                            qrImg.removeAttribute('alt');
+                            const parent = qrImg.parentElement;
+                            if (parent) parent.classList.add('qr-missing');
+                        }
+                    };
+
+                    qrImg.onerror = tryNext;
+                    qrImg.onload = () => {
+                        qrImg.style.opacity = '1';
+                        const parent = qrImg.parentElement;
+                        if (parent) parent.classList.remove('qr-missing');
+                    };
+
+                    // Lightbox: klik QR untuk memperbesar
+                    const qrLightbox = document.getElementById('qr-lightbox');
+                    const qrLightboxImg = qrLightbox && qrLightbox.querySelector('#qr-lightbox-img');
+                    const qrLightboxClose = qrLightbox && qrLightbox.querySelector('.qr-lightbox-close');
+                    const qrLightboxOverlay = qrLightbox && qrLightbox.querySelector('.qr-lightbox-overlay');
+
+                    if (qrImg) {
+                        qrImg.style.cursor = 'zoom-in';
+                        qrImg.addEventListener('click', () => {
+                            if (!qrImg.src) return;
+                            if (qrLightboxImg) qrLightboxImg.src = qrImg.src;
+                            if (qrLightbox) {
+                                qrLightbox.classList.add('open');
+                                qrLightbox.setAttribute('aria-hidden', 'false');
+                                document.body.style.overflow = 'hidden';
+                            }
+                        });
+                    }
+
+                    function closeQrLightbox() {
+                        if (!qrLightbox) return;
+                        qrLightbox.classList.remove('open');
+                        qrLightbox.setAttribute('aria-hidden', 'true');
+                        if (qrLightboxImg) qrLightboxImg.src = '';
+                        document.body.style.overflow = '';
+                    }
+
+                    qrLightboxClose && qrLightboxClose.addEventListener('click', closeQrLightbox);
+                    qrLightboxOverlay && qrLightboxOverlay.addEventListener('click', closeQrLightbox);
+                    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeQrLightbox(); });
+                }
+
                 supportModal.classList.add('open');
                 supportModal.setAttribute('aria-hidden', 'false');
             });

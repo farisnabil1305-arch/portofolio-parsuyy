@@ -206,7 +206,6 @@
                         <span>GoPay</span>
                     </button>
                 </div>
-                <p class="muted">Nomor default: <strong id="support-default-number">0857-7212-7073</strong></p>
             </aside>
         </div>
     </section>
@@ -219,12 +218,23 @@
             <h3 id="support-modal-title">Dukungan</h3>
             <p id="support-modal-text">Transfer ke nomor berikut atau salin untuk membuka aplikasi dompet.</p>
             <div class="support-modal-body">
-                <div class="support-qr" aria-hidden="true"></div>
+                <div class="support-qr" aria-hidden="true">
+                    <img id="support-qr-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="QR dukungan" />
+                </div>
                 <div class="support-number-row">
                     <input id="support-number" readonly value="085772127073" />
                     <button id="copy-support-number" class="btn-secondary">Salin</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- QR Lightbox (klik QR untuk memperbesar) -->
+    <div id="qr-lightbox" class="qr-lightbox" aria-hidden="true">
+        <div class="qr-lightbox-overlay"></div>
+        <div class="qr-lightbox-card" role="dialog" aria-modal="true" aria-labelledby="qr-lightbox-title">
+            <button class="qr-lightbox-close" aria-label="Tutup gambar">&times;</button>
+            <img id="qr-lightbox-img" src="" alt="QR besar" />
         </div>
     </div>
 
