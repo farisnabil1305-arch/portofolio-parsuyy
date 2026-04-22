@@ -18,7 +18,7 @@
 body {
     background-color: var(--bg-dark);
     color: var(--text-main);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     line-height: 1.6;
     scroll-behavior: smooth;
 }
@@ -175,9 +175,21 @@ nav .container {
 .hero-btns a.enter { transform: translateY(0); }
 .btn-primary:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.45); }
 
-/* reveal on scroll */
-.reveal-on-scroll { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
-.reveal-on-scroll.in-view { opacity: 1; transform: none; }
+/* Keep legacy class visible so non-target sections stay unchanged */
+.reveal-on-scroll { opacity: 1; transform: none; }
+
+/* Hero + About scroll reveal only */
+.ha-reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .72s cubic-bezier(.22, 1, .36, 1), transform .72s cubic-bezier(.22, 1, .36, 1);
+    will-change: opacity, transform;
+}
+
+.ha-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 
 .hero-image {
     width: 100%;
@@ -246,6 +258,35 @@ h1 {
     max-width: 480px;
 }
 
+/* Hero hover polish */
+.hero .headline,
+.hero p,
+.hero .badge,
+.hero .hero-image-wrapper {
+    transition: transform .35s cubic-bezier(.2, .8, .2, 1), color .35s ease, box-shadow .35s ease;
+}
+
+.hero .headline:hover {
+    transform: translateY(-2px);
+    color: #f8fbff;
+    text-shadow: 0 8px 28px rgba(56, 189, 248, 0.2);
+}
+
+.hero p:hover {
+    transform: translateY(-2px);
+    color: #cbd5e1;
+}
+
+.hero .badge:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 24px rgba(56, 189, 248, 0.12);
+}
+
+.hero .hero-image-wrapper:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+}
+
 .hero-btns {
     display: flex;
     gap: 15px;
@@ -285,6 +326,35 @@ h2 {
 .about-text p {
     color: var(--text-muted);
     margin-bottom: 20px;
+}
+
+/* About hover polish */
+.about-section .about-text p,
+.about-section .timeline-item,
+.about-section .hobby,
+.about-section .section-header h2 {
+    transition: transform .3s ease, color .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+
+.about-section .about-text p:hover {
+    transform: translateX(4px);
+    color: #cbd5e1;
+}
+
+.about-section .timeline-item:hover {
+    transform: translateX(4px);
+    border-left-color: var(--accent);
+}
+
+.about-section .hobby:hover {
+    transform: translateY(-3px);
+    color: var(--text-main);
+    border-color: rgba(56, 189, 248, 0.45);
+}
+
+.about-section .section-header h2:hover {
+    color: #f8fbff;
+    border-bottom-color: var(--accent);
 }
 
 .personal-info h3, .achievements h3 {
@@ -434,6 +504,48 @@ h2 {
 .support-btn[data-method="gopay"] { background: linear-gradient(90deg, #7c3aed 0%, #ec4899 100%); color: var(--text-main); box-shadow: 0 8px 20px rgba(124,58,237,0.12); }
 .support-card .muted { color:var(--text-muted); font-size:0.9rem; margin-top:14px; }
 
+/* Brief modal (Open Jasa) */
+.brief-modal { position: fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:2400; pointer-events:none; opacity:0; transition:opacity .2s ease; }
+.brief-modal.open { pointer-events:auto; opacity:1; }
+.brief-modal-overlay { position:absolute; inset:0; background:rgba(2,6,23,0.7); backdrop-filter:blur(6px); }
+.brief-modal-card {
+    position: relative;
+    z-index: 1;
+    width: min(620px, 94%);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 16px 46px rgba(0,0,0,0.55);
+}
+.brief-modal-close { position:absolute; right:10px; top:8px; border:none; background:transparent; color:var(--text-muted); font-size:26px; cursor:pointer; }
+.brief-modal-subtitle { color: var(--text-muted); margin-top: 8px; margin-bottom: 14px; }
+.brief-form { display:grid; gap:10px; }
+.brief-form label { color: var(--text-main); font-weight: 600; font-size: 0.92rem; }
+.brief-form input,
+.brief-form textarea {
+    width: 100%;
+    padding: 11px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(148,163,184,0.06);
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+.brief-form input:focus,
+.brief-form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(56,189,248,0.18);
+}
+.brief-form input[readonly] { opacity: 0.92; cursor: not-allowed; }
+.brief-actions { display:flex; justify-content:flex-end; gap:10px; margin-top: 8px; }
+.brief-actions .btn-primary,
+.brief-actions .btn-secondary {
+    padding: 11px 16px;
+}
+
 .support-modal { position: fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:2000; pointer-events:none; opacity:0; transition:opacity .2s ease; }
 .support-modal.open { pointer-events:auto; opacity:1; }
 .support-modal-overlay { position:absolute; inset:0; background:rgba(2,6,23,0.6); backdrop-filter:blur(6px); }
@@ -481,6 +593,57 @@ h2 {
     .support-btn { flex:1; }
     .support-modal-body { flex-direction:column; align-items:stretch; }
     .support-qr { width:100%; height:180px; }
+    .brief-actions { justify-content:stretch; }
+    .brief-actions .btn-primary,
+    .brief-actions .btn-secondary { flex: 1; text-align:center; }
+}
+
+@media (max-width: 480px) {
+    .brief-modal {
+        align-items: flex-start;
+        padding: 12px;
+    }
+
+    .brief-modal-card {
+        width: 100%;
+        max-height: calc(100vh - 24px);
+        overflow-y: auto;
+        border-radius: 12px;
+        padding: 16px;
+    }
+
+    .brief-modal-subtitle {
+        font-size: 0.92rem;
+        margin-bottom: 12px;
+    }
+
+    .brief-form {
+        gap: 8px;
+    }
+
+    .brief-form label {
+        font-size: 0.88rem;
+    }
+
+    .brief-form input,
+    .brief-form textarea {
+        padding: 9px 10px;
+        font-size: 0.92rem;
+    }
+
+    .brief-actions {
+        position: sticky;
+        bottom: 0;
+        background: linear-gradient(180deg, rgba(26,29,33,0), rgba(26,29,33,0.94) 34%);
+        padding-top: 10px;
+        margin-top: 10px;
+    }
+
+    .brief-actions .btn-primary,
+    .brief-actions .btn-secondary {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
 }
 
 /* --- Buttons --- */
@@ -649,4 +812,171 @@ body, nav, .contact-card, .skill-category, footer, .timeline-item::before, .time
 
 @media (max-width: 768px) {
     .theme-btn { margin-left: 0; margin-top: 10px; }
+}
+
+/* --- Services / Open Jasa --- */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 22px;
+    margin-top: 18px;
+}
+
+.service-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border: 1px solid var(--border);
+    padding: 22px;
+    border-radius: 14px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    transition: transform .28s cubic-bezier(.16,1,.3,1), box-shadow .28s ease;
+}
+
+.service-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.45); border-color: rgba(0,217,255,0.12); }
+
+.service-badge {
+    display: inline-flex;
+    align-self: flex-start;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    letter-spacing: 0.02em;
+    font-weight: 700;
+    color: #0b1220;
+    background: linear-gradient(90deg, #facc15, #f59e0b);
+    box-shadow: 0 6px 14px rgba(245, 158, 11, 0.25);
+}
+
+.service-media { width:56px; height:56px; border-radius:12px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, rgba(0,217,255,0.06), rgba(124,58,237,0.06)); color:var(--accent); }
+.service-card h3 { margin:0; font-size:1.05rem; }
+.service-desc { color:var(--text-muted); font-size:0.95rem; margin-top:6px; flex:1; }
+.service-meta { display:flex; flex-wrap:wrap; gap:10px; margin-top:2px; }
+.service-meta span {
+    font-size: 0.82rem;
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: rgba(148, 163, 184, 0.08);
+}
+.service-features {
+    list-style: none;
+    display: grid;
+    gap: 8px;
+    margin: 4px 0 0;
+    padding: 0;
+}
+.service-features li {
+    position: relative;
+    padding-left: 18px;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+.service-features li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
+}
+.service-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:8px; }
+.service-price { color:var(--text-muted); font-weight:600; }
+.service-price strong { color:var(--text-main); }
+
+/* Tambah napas antar section setelah Open Jasa */
+#services {
+    padding-bottom: 36px;
+}
+
+#socials {
+    padding-top: 28px;
+}
+
+#faq {
+    padding-top: 40px;
+    padding-bottom: 44px;
+}
+
+.faq-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.faq-item {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    overflow: hidden;
+}
+
+.faq-question {
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: transparent;
+    color: var(--text-main);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 16px 18px;
+    cursor: pointer;
+    position: relative;
+}
+
+.faq-question::after {
+    content: '+';
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent);
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition: transform .2s ease;
+}
+
+.faq-item.open .faq-question::after {
+    content: '-';
+}
+
+.faq-answer {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    border-top: 1px solid transparent;
+    transition: max-height .28s ease, opacity .2s ease, border-color .2s ease;
+}
+
+.faq-item.open .faq-answer {
+    opacity: 1;
+    border-top-color: var(--border);
+}
+
+.faq-answer p {
+    color: var(--text-muted);
+    padding: 14px 18px 16px;
+    line-height: 1.65;
+}
+
+@media (max-width: 900px) {
+    .services-grid { grid-template-columns: 1fr; }
+
+    #services {
+        padding-bottom: 28px;
+    }
+
+    #socials {
+        padding-top: 24px;
+    }
+
+    #faq {
+        padding-top: 30px;
+        padding-bottom: 28px;
+    }
 }

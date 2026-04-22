@@ -6,7 +6,7 @@
     <title>Portfolio | Faris Nabil</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -29,7 +29,7 @@
         </div>
     </nav>
 
-    <header class="hero container">
+    <header class="hero container hero-section">
         <div class="hero-content">
             <div class="badges-wrapper">
                 <span class="badge">Available for Projects</span>
@@ -52,7 +52,7 @@
         </div>
     </header>
 
-    <section id="about" class="container">
+    <section id="about" class="container about-section">
         <div class="section-header">
             <span class="section-number">01.</span>
             <h2>Tentang Saya</h2>
@@ -67,7 +67,7 @@
                     <ul>
                         <li><strong>Umur:</strong> 17 Tahun</li>
                         <li><strong>Lokasi:</strong> Cileungsi, Jawa Barat</li>
-                        <li><strong>Minat:</strong> Fotografi, Film, Sepak Bola</li>
+                        <li><strong>Minat:</strong> Musik, Film, Sepak Bola</li>
                     </ul>
                 </div>
                 
@@ -75,7 +75,7 @@
                     <h3>Hobi</h3>
                     <div class="hobby-tags">
                         <span class="hobby">Coding</span>
-                        <span class="hobby">Fotografi</span>
+                        <span class="hobby">Musik</span>
                         <span class="hobby">Sepak Bola</span>
                         <span class="hobby">Desain UI</span>
                         <span class="hobby">Gaming</span>
@@ -156,21 +156,185 @@
             </div>
         </div>
     </section>
+    <!-- Services / Open Jasa -->
+    <section id="services" class="container reveal-on-scroll">
+        <div class="section-header">
+            <span class="section-number">03.</span>
+            <h2>Open Jasa</h2>
+        </div>
+        <p class="subtitle">Layanan yang saya tawarkan — saya bantu dari mockup sampai deploy. Klik <strong>Hire</strong> untuk mulai diskusi.</p>
+
+        <div class="services-grid">
+            <article class="service-card">
+                <span class="service-badge">Paling Favorit</span>
+                <div class="service-media">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2" fill="currentColor"/></svg>
+                </div>
+                <h3>Website UMKM</h3>
+                <p class="service-desc">Website untuk usaha kecil dan menengah: katalog produk, daftar layanan, dan integrasi pembayaran sederhana.</p>
+                <div class="service-meta" aria-label="Detail paket Website UMKM">
+                    <span>Estimasi: 4 - 7 hari</span>
+                    <span>Revisi: 2x</span>
+                </div>
+                <ul class="service-features">
+                    <li>Landing page profesional</li>
+                    <li>Halaman katalog produk/jasa</li>
+                    <li>Form WhatsApp langsung masuk</li>
+                    <li>Setup dasar SEO on-page</li>
+                </ul>
+                <div class="service-footer">
+                    <span class="service-price">Mulai <strong>Rp 250.000</strong></span>
+                    <a href="#contact" class="btn-primary" data-brief-trigger="true" data-package="Website UMKM">Hire</a>
+                </div>
+            </article>
+
+            <article class="service-card">
+                <div class="service-media">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="8" r="3" fill="currentColor"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0" fill="currentColor"/></svg>
+                </div>
+                <h3>Website Portofolio</h3>
+                <p class="service-desc">Portofolio profesional untuk menampilkan karya, pengalaman, dan kontak. Desain responsif dan mudah di-update.</p>
+                <div class="service-meta" aria-label="Detail paket Website Portofolio">
+                    <span>Estimasi: 2 - 4 hari</span>
+                    <span>Revisi: 3x</span>
+                </div>
+                <ul class="service-features">
+                    <li>Desain hero + about modern</li>
+                    <li>Section skill dan kontak siap pakai</li>
+                    <li>Animasi scroll ringan</li>
+                    <li>Optimasi tampilan mobile</li>
+                </ul>
+                <div class="service-footer">
+                    <span class="service-price">Mulai <strong>Rp 150.000</strong></span>
+                    <a href="#contact" class="btn-primary" data-brief-trigger="true" data-package="Website Portofolio">Hire</a>
+                </div>
+            </article>
+
+            <article class="service-card">
+                <div class="service-media">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 4h10a2 2 0 0 1 2 2v14l-4-2-4 2-4-2V6a2 2 0 0 1 2-2z" fill="currentColor" opacity="0.85"/><path d="M9 8h6M9 11h6M9 14h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </div>
+                <h3>Pendampingan Tugas & Laporan</h3>
+                <p class="service-desc">Pendampingan penyusunan tugas/laporan secara etis: bantu struktur, editing Word, dan konsultasi teknis web sampai kamu paham.</p>
+                <div class="service-meta" aria-label="Detail paket Pendampingan Tugas dan Laporan">
+                    <span>Estimasi: 1 - 3 hari</span>
+                    <span>Revisi: 2x</span>
+                </div>
+                <ul class="service-features">
+                    <li>Review struktur dan alur pembahasan</li>
+                    <li>Editing rapih di Microsoft Word</li>
+                    <li>Cek tata bahasa dan konsistensi format</li>
+                    <li>Konsultasi web dasar sesuai topik tugas</li>
+                </ul>
+                <div class="service-footer">
+                    <span class="service-price">Mulai <strong>Rp 120.000</strong></span>
+                    <a href="#contact" class="btn-primary" data-brief-trigger="true" data-package="Pendampingan Tugas dan Laporan">Hire</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Brief Modal (Open Jasa) -->
+    <div id="brief-modal" class="brief-modal" aria-hidden="true">
+        <div class="brief-modal-overlay"></div>
+        <div class="brief-modal-card" role="dialog" aria-modal="true" aria-labelledby="brief-modal-title">
+            <button class="brief-modal-close" aria-label="Tutup form">&times;</button>
+            <h3 id="brief-modal-title">Brief Kebutuhan</h3>
+            <p class="brief-modal-subtitle">Isi singkat kebutuhan kamu, nanti langsung diarahkan ke WhatsApp dengan format rapi.</p>
+
+            <form id="brief-form" class="brief-form">
+                <label for="brief-package">Paket</label>
+                <input id="brief-package" name="package" type="text" readonly>
+
+                <label for="brief-name">Nama</label>
+                <input id="brief-name" name="name" type="text" placeholder="Nama kamu" required>
+
+                <label for="brief-needs">Kebutuhan</label>
+                <textarea id="brief-needs" name="needs" rows="4" placeholder="Contoh: butuh website company profile 3 halaman" required></textarea>
+
+                <label for="brief-budget">Budget</label>
+                <input id="brief-budget" name="budget" type="text" placeholder="Contoh: Rp 500.000 - Rp 1.000.000" required>
+
+                <label for="brief-deadline">Deadline</label>
+                <input id="brief-deadline" name="deadline" type="date" required>
+
+                <div class="brief-actions">
+                    <button type="button" class="btn-secondary" id="brief-cancel">Batal</button>
+                    <button type="submit" class="btn-primary">Kirim ke WhatsApp</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <section id="faq" class="container reveal-on-scroll">
+        <div class="section-header">
+            <span class="section-number">04.</span>
+            <h2>FAQ</h2>
+        </div>
+        <p class="subtitle">Pertanyaan yang paling sering ditanyakan sebelum mulai kerja sama.</p>
+
+        <div class="faq-list" aria-label="Daftar pertanyaan umum">
+            <article class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    Proses kerja dari awal sampai selesai gimana?
+                </button>
+                <div class="faq-answer" hidden>
+                    <p>Alurnya: diskusi kebutuhan, kirim brief, deal paket, lalu pengerjaan bertahap dengan update progres. Setelah selesai, masuk tahap revisi sesuai paket dan final handoff.</p>
+                </div>
+            </article>
+
+            <article class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    Revisi berapa kali dan kalau nambah gimana?
+                </button>
+                <div class="faq-answer" hidden>
+                    <p>Jumlah revisi mengikuti paket yang dipilih. Jika revisi tambahan di luar kuota, tetap bisa dikerjakan dengan biaya tambahan yang disepakati di awal.</p>
+                </div>
+            </article>
+
+            <article class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    Estimasi pengerjaan tiap paket berapa lama?
+                </button>
+                <div class="faq-answer" hidden>
+                    <p>Estimasi sudah tertera di tiap card paket. Waktu final bisa menyesuaikan kompleksitas fitur dan kecepatan feedback dari client.</p>
+                </div>
+            </article>
+
+            <article class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    Bisa cicilan atau DP dulu tidak?
+                </button>
+                <div class="faq-answer" hidden>
+                    <p>Bisa. Umumnya menggunakan skema DP di awal lalu pelunasan setelah hasil mendekati final. Opsi cicilan bisa dibahas sesuai kebutuhan project.</p>
+                </div>
+            </article>
+
+            <article class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    Domain dan hosting include atau terpisah?
+                </button>
+                <div class="faq-answer" hidden>
+                    <p>Default-nya terpisah dari biaya pembuatan website. Namun jika dibutuhkan, saya bisa bantu rekomendasi, setup, dan deploy sampai online.</p>
+                </div>
+            </article>
+        </div>
+    </section>
 
     <section id="socials" class="container reveal-on-scroll">
         <div class="section-header">
-            <span class="section-number">03.</span>
+            <span class="section-number">05.</span>
             <h2>Media Sosial</h2>
         </div>
         <p class="subtitle">Temui saya di platform berikut — akan saya hubungkan nanti.</p>
         <div class="socials-list">
-            <a href="#" class="social-link instagram" aria-label="Instagram">
+            <a href="https://www.instagram.com/paarrisnabil?igsh=MWU2ZnA1ZGtkbWN5eg==" class="social-link instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                 <span class="social-icon">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="4" fill="currentColor"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>
                 </span>
                 <span class="social-label">Instagram</span>
             </a>
-            <a href="#" class="social-link tiktok" aria-label="TikTok">
+            <a href="https://www.tiktok.com/@pernandezzz18_?_r=1&_t=ZS-95bXTQMGPsv" class="social-link tiktok" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
                 <span class="social-icon">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 3v10.55A4 4 0 1 0 16 17V7h4V3z" fill="currentColor"/></svg>
                 </span>
@@ -188,8 +352,8 @@
     <section id="contact" class="container">
         <div class="contact-grid">
             <div class="contact-card">
-                <h2>Ayo Berkolaborasi</h2>
-                <p>Saya selalu terbuka untuk diskusi mengenai proyek baru atau peluang kerja.</p>
+                <h2>Hubungi Saya</h2>
+                <p>Melalui Whatsapp Untuk Lebih Lanjut</p>
                 <a href="https://wa.me/6285772127073?text=Halo%20Faris%2C%20saya%20ingin%20berkolaborasi" class="btn-primary" target="_blank" rel="noopener noreferrer">Hubungi via WhatsApp</a>
             </div>
 

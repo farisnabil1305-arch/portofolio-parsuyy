@@ -1,5 +1,5 @@
 // Smooth scroll for in-page anchors
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+document.querySelectorAll('a[href^="#"]:not([data-brief-trigger="true"])').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = this.getAttribute('href');
@@ -11,36 +11,29 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Reveal on scroll with staggered children
-function setupRevealOnScroll() {
+// Scroll reveal only for Hero and About
+function setupHeroAboutReveal() {
+    const targets = [
+        ...document.querySelectorAll('.hero-section .badges-wrapper, .hero-section .headline, .hero-section p, .hero-section .hero-btns a, .hero-section .hero-image-wrapper'),
+        ...document.querySelectorAll('.about-section .section-header, .about-section .about-text p, .about-section .personal-info, .about-section .hobbies, .about-section .timeline-item')
+    ];
+
+    if (!targets.length) return;
+
+    targets.forEach((el, index) => {
+        el.classList.add('ha-reveal');
+        el.style.transitionDelay = `${Math.min(index * 55, 420)}ms`;
+    });
+
     const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const sec = entry.target;
-                sec.classList.add('in-view');
-
-                const items = sec.querySelectorAll('h2, .section-header, .badge, .headline, .hero p, .hero-btns a, .timeline-item, .skill-category, .tags span, .about-text p, .personal-info li, .contact-card');
-                items.forEach((el, i) => {
-                    el.classList.add('stagger');
-                    el.style.transitionDelay = (i * 60) + 'ms';
-                    setTimeout(() => el.classList.add('in'), i * 60 + 40);
-                });
-
-                const timelineItems = sec.querySelectorAll('.timeline-item');
-                timelineItems.forEach((it, idx) => {
-                    it.style.transitionDelay = (idx * 80) + 'ms';
-                    it.classList.add('in');
-                });
-
-                obs.unobserve(sec);
-            }
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
         });
-    }, { threshold: 0.12, rootMargin: '0px 0px -80px 0px' });
+    }, { threshold: 0.2, rootMargin: '0px 0px -60px 0px' });
 
-    document.querySelectorAll('section').forEach(sec => {
-        sec.classList.add('reveal-on-scroll');
-        observer.observe(sec);
-    });
+    targets.forEach(el => observer.observe(el));
 }
 
 // DOM ready
@@ -144,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hero.addEventListener('mouseleave', () => imageWrap.style.transform = '');
     }
 
-    setupRevealOnScroll();
+    setupHeroAboutReveal();
     
     // SKILL CARDS - Mouse tracking effect
     const skillCards = document.querySelectorAll('.skill-category');
@@ -339,6 +332,112 @@ document.addEventListener('DOMContentLoaded', () => {
                 copySupportBtn.textContent = 'Gagal';
                 setTimeout(() => copySupportBtn.textContent = 'Salin', 1800);
             }
+        });
+    }
+
+    // BRIEF MODAL (Open Jasa -> WhatsApp)
+    const briefModal = document.getElementById('brief-modal');
+    if (briefModal) {
+        const briefOverlay = briefModal.querySelector('.brief-modal-overlay');
+        const briefClose = briefModal.querySelector('.brief-modal-close');
+        const briefCancel = document.getElementById('brief-cancel');
+        const briefForm = document.getElementById('brief-form');
+        const packageInput = document.getElementById('brief-package');
+        const nameInput = document.getElementById('brief-name');
+        const needsInput = document.getElementById('brief-needs');
+        const budgetInput = document.getElementById('brief-budget');
+        const deadlineInput = document.getElementById('brief-deadline');
+        const hireButtons = document.querySelectorAll('#services [data-brief-trigger="true"]');
+        const waNumber = '6285772127073';
+
+        function openBriefModal(selectedPackage) {
+            if (packageInput) packageInput.value = selectedPackage || 'Paket Custom';
+            briefModal.classList.add('open');
+            briefModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => nameInput && nameInput.focus(), 30);
+        }
+
+        function closeBriefModal() {
+            briefModal.classList.remove('open');
+            briefModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        hireButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const selectedPackage = btn.dataset.package || btn.closest('.service-card')?.querySelector('h3')?.textContent?.trim() || 'Paket Custom';
+                openBriefModal(selectedPackage);
+            });
+        });
+
+        briefOverlay && briefOverlay.addEventListener('click', closeBriefModal);
+        briefClose && briefClose.addEventListener('click', closeBriefModal);
+        briefCancel && briefCancel.addEventListener('click', closeBriefModal);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && briefModal.classList.contains('open')) {
+                closeBriefModal();
+            }
+        });
+
+        briefForm && briefForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const selectedPackage = packageInput?.value.trim() || 'Paket Custom';
+            const name = nameInput?.value.trim() || '-';
+            const needs = needsInput?.value.trim() || '-';
+            const budget = budgetInput?.value.trim() || '-';
+            const deadline = deadlineInput?.value || '-';
+
+            const message = [
+                'Halo Faris, saya ingin konsultasi layanan.',
+                '',
+                `Paket: ${selectedPackage}`,
+                `Nama: ${name}`,
+                `Kebutuhan: ${needs}`,
+                `Budget: ${budget}`,
+                `Deadline: ${deadline}`
+            ].join('\n');
+
+            const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+            window.open(waUrl, '_blank', 'noopener,noreferrer');
+
+            briefForm.reset();
+            closeBriefModal();
+        });
+    }
+
+    // FAQ accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    if (faqItems.length) {
+        faqItems.forEach(item => {
+            const trigger = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            if (!trigger || !answer) return;
+
+            trigger.addEventListener('click', () => {
+                const isOpen = item.classList.contains('open');
+
+                faqItems.forEach(otherItem => {
+                    otherItem.classList.remove('open');
+                    const otherTrigger = otherItem.querySelector('.faq-question');
+                    const otherAnswer = otherItem.querySelector('.faq-answer');
+                    if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
+                    if (otherAnswer) {
+                        otherAnswer.style.maxHeight = '0px';
+                        otherAnswer.hidden = true;
+                    }
+                });
+
+                if (!isOpen) {
+                    item.classList.add('open');
+                    trigger.setAttribute('aria-expanded', 'true');
+                    answer.hidden = false;
+                    answer.style.maxHeight = `${answer.scrollHeight}px`;
+                }
+            });
         });
     }
 });
